@@ -8,7 +8,9 @@ The project is still in the design phase; no code will be written until there is
 
 ## Design
 
-**Symmetric Encryption** - AES-GCM, 256-bit key, 96-bit nonce, 128-bit tag. Performed via [CLR Security](https://clrsecurity.codeplex.com/), as .NET doesn’t currently have a native wrapper for this functionality.
+**Symmetric Encryption** - AES-GCM, 256-bit key, 96-bit nonce, 128-bit tag. Performed via [CLR Security](https://clrsecurity.codeplex.com/), as .NET doesn’t currently have a native wrapper for this functionality. Data will be returned in the following format:
+
+    nonce[12] || tag[16] || data[length - 28]
 
 **Symmetric Key & Nonce** - The nonce on all calls will be generated via [RNGCryptoServiceProvider](http://msdn.microsoft.com/en-us/library/system.security.cryptography.rngcryptoserviceprovider%28v=vs.110%29.aspx). A `GenerateKey` method will also be provided that will use [RNGCryptoServiceProvider](http://msdn.microsoft.com/en-us/library/system.security.cryptography.rngcryptoserviceprovider%28v=vs.110%29.aspx) to generate a secure random key.
 
