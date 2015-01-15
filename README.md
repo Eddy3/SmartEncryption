@@ -14,11 +14,21 @@ The project is still in the design phase; no code will be written until there is
 
 **Symmetric Key & Nonce** - The nonce on all calls will be generated via [RNGCryptoServiceProvider](http://msdn.microsoft.com/en-us/library/system.security.cryptography.rngcryptoserviceprovider%28v=vs.110%29.aspx). A `GenerateKey` method will also be provided that will use [RNGCryptoServiceProvider](http://msdn.microsoft.com/en-us/library/system.security.cryptography.rngcryptoserviceprovider%28v=vs.110%29.aspx) to generate a secure random key.
 
-**Symmetric Key Derivation** - To generate an encryption key from a password, a `DeriveKey` method will be provided that uses PBKDF2 via [CLR Security](https://clrsecurity.codeplex.com/) (to allow the use of HMACSHA256). The integration count will be based on the following enumeration:
+**Symmetric Key Derivation** - To generate an encryption key from a password, a `DeriveKey` method will be provided that uses [scrypt](https://en.wikipedia.org/wiki/Scrypt) via [libsodium](https://github.com/jedisct1/libsodium) (via [libsodium-net](https://github.com/adamcaudill/libsodium-net)). Settings will be determined by the `Sodium.PasswordHash.Strength` value passed in.
 
-* `SecurityLevel.Low` = 10,000
-* `SecurityLevel.Medium` = 50,000
-* `SecurityLevel.High` = 100,000
+**Asymmetric Encryption** - Will be performed via the [libsodium](https://github.com/jedisct1/libsodium) `crypto_box` method (Curve25519/XSalsa20/Poly1305).
+
+Output format:
+
+    version[1] || nonce[24] || data[length - 25]
+
+**Asymmetric Key & Nonce** - The nonce on all calls will be generated via [libsodium](https://github.com/jedisct1/libsodium)’s `random_bytes` method. A `GenerateKey` method will also be provided that will use the `random_bytes` method to generate a secure random key.
+
+**Asymmetric Key Derivation** - To generate an encryption key from a password, a `DeriveKey` method will be provided that uses [scrypt](https://en.wikipedia.org/wiki/Scrypt) via [libsodium](https://github.com/jedisct1/libsodium) (via [libsodium-net](https://github.com/adamcaudill/libsodium-net)). Settings will be determined by the `Sodium.PasswordHash.Strength` value passed in.
+
+**Password Hashing** - To provide a safe means to hash passwords, [scrypt](https://en.wikipedia.org/wiki/Scrypt) will be used. Settings will be determined by the `Sodium.PasswordHash.Strength` value passed in.
+
+**Fast Hashing** - To provide a high speed hashing algorithm, the `crypto_generichash` (BLAKE2b) method from [libsodium](https://github.com/jedisct1/libsodium) will be exposed.
 
 ## License
 
