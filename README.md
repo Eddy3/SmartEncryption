@@ -14,7 +14,7 @@ The project is still in the design phase; no code will be written until there is
 
 **Symmetric Key & Nonce** - The nonce on all calls will be generated via [RNGCryptoServiceProvider](http://msdn.microsoft.com/en-us/library/system.security.cryptography.rngcryptoserviceprovider%28v=vs.110%29.aspx). A `GenerateKey` method will also be provided that will use [RNGCryptoServiceProvider](http://msdn.microsoft.com/en-us/library/system.security.cryptography.rngcryptoserviceprovider%28v=vs.110%29.aspx) to generate a secure random key.
 
-**Symmetric Key Derivation** - To generate an encryption key from a password, a `DeriveKey` method will be provided that uses PBKDF2 (via [Rfc2898DeriveBytes](http://msdn.microsoft.com/en-us/library/system.security.cryptography.rfc2898derivebytes%28v=vs.110%29.aspx) - which is based on [HMACSHA1](http://msdn.microsoft.com/en-us/library/system.security.cryptography.hmacsha1%28v=vs.110%29.aspx)). The integration count will be based on the following enumeration:
+**Symmetric Key Derivation** - To generate an encryption key from a password, a `DeriveKey` method will be provided that uses PBKDF2 via [CLR Security](https://clrsecurity.codeplex.com/) (to allow the use of HMACSHA256). The integration count will be based on the following enumeration:
 
 * `SecurityLevel.Low` = 10,000
 * `SecurityLevel.Medium` = 50,000
