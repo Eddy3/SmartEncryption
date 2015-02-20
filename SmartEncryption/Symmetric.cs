@@ -36,6 +36,7 @@ namespace SmartEncryption
             
         }
 
+        /*
         public static byte[] DeriveKey(byte[] password)
         {
             return Hashing.PasswordHash(password);
@@ -45,6 +46,8 @@ namespace SmartEncryption
         {
             return Hashing.PasswordHash(password, strength);
         }
+         */
+
         public static byte[] Encrypt(byte[] plaintext, byte[] key)
         {
             byte[] nonce = GenerateNonce();

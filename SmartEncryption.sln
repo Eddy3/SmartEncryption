@@ -5,7 +5,7 @@ VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartEncryption", "SmartEncryption\SmartEncryption.csproj", "{5AB40E67-F8D2-48BF-B5A7-8F133112C6EB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{9AF73A6C-102B-4888-9E2C-A71C1016152F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{52BFD2B7-1F77-4A36-B92B-02104531EE75}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{5AB40E67-F8D2-48BF-B5A7-8F133112C6EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5AB40E67-F8D2-48BF-B5A7-8F133112C6EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5AB40E67-F8D2-48BF-B5A7-8F133112C6EB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9AF73A6C-102B-4888-9E2C-A71C1016152F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9AF73A6C-102B-4888-9E2C-A71C1016152F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9AF73A6C-102B-4888-9E2C-A71C1016152F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9AF73A6C-102B-4888-9E2C-A71C1016152F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52BFD2B7-1F77-4A36-B92B-02104531EE75}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52BFD2B7-1F77-4A36-B92B-02104531EE75}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52BFD2B7-1F77-4A36-B92B-02104531EE75}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52BFD2B7-1F77-4A36-B92B-02104531EE75}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
