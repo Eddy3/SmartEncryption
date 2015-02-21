@@ -6,7 +6,6 @@ namespace SmartEncryption
     {
         private const int NONCE_SIZE_BYTES = 24;
         private const byte VERSION = 0x01;
-        private static Sodium.KeyPair _keyPair;
 
         public static byte[] GenerateNonce()
         {
