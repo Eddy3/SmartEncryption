@@ -1,7 +1,6 @@
 ﻿using System.Security.Cryptography;
 using Security.Cryptography;
 using System.IO;
-using System;
 
 namespace SmartEncryption
 {
@@ -36,7 +35,6 @@ namespace SmartEncryption
             
         }
 
-        /*
         public static byte[] DeriveKey(byte[] password)
         {
             return Hashing.PasswordHash(password);
@@ -46,7 +44,6 @@ namespace SmartEncryption
         {
             return Hashing.PasswordHash(password, strength);
         }
-         */
 
         public static byte[] Encrypt(byte[] plaintext, byte[] key)
         {
@@ -66,13 +63,13 @@ namespace SmartEncryption
                     byte[] cipherText = ms.ToArray();
                     byte[] authenticationTag = encryptor.GetTag();
                     byte[] blob = new byte[29 + cipherText.Length];
-                    int writeOffset = 1;
                     blob[0] = VERSION;
-                    System.Buffer.BlockCopy(nonce, 0, blob, writeOffset, NONCE_SIZE_BYTES);
-                    writeOffset += NONCE_SIZE_BYTES;
-                    System.Buffer.BlockCopy(authenticationTag, 0, blob, writeOffset, TAG_SIZE_BYTES);
-                    writeOffset += TAG_SIZE_BYTES;
-                    System.Buffer.BlockCopy(cipherText, 0, blob, writeOffset, cipherText.Length);
+                    int offset = 1;
+                    System.Buffer.BlockCopy(nonce, 0, blob, offset, NONCE_SIZE_BYTES);
+                    offset += NONCE_SIZE_BYTES;
+                    System.Buffer.BlockCopy(authenticationTag, 0, blob, offset, TAG_SIZE_BYTES);
+                    offset += TAG_SIZE_BYTES;
+                    System.Buffer.BlockCopy(cipherText, 0, blob, offset, cipherText.Length);
                     return blob;
                 }
             }
