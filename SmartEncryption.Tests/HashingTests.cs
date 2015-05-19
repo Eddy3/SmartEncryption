@@ -20,6 +20,17 @@ namespace SmartEncryption.Tests
         }
 
         [TestMethod]
+        public void PasswordInvalidPass()
+        {
+            const string PASSWORD = "ThisIsANot SoRandomPasswordButItIsLongAndHasAspaceWayBackThere";
+            const string PASSWORD_BAD = "ThisIsNotTheRightPassword";
+            var hash = Hashing.PasswordHash(PASSWORD);
+            var result = Hashing.ValidatePasswordHash(PASSWORD_BAD, hash);
+
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod]
         public void PasswordValidPassSlow()
         {
             const string PASSWORD = "ThisIsANot SoRandomPasswordButItIsLongAndHasAspaceWayBackThere";
