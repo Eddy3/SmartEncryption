@@ -4,14 +4,13 @@ namespace SmartEncryption
 {
     public class Hashing
     {
-        public static byte[] PasswordHash(byte[] password)
+        public static string PasswordHash(string password, PasswordHash.Strength strength = Sodium.PasswordHash.Strength.Interactive)
         {
-            return PasswordHash(password, Sodium.PasswordHash.Strength.Interactive);
+            return Sodium.PasswordHash.ScryptHashString(password, strength);
         }
 
-        public static byte[] PasswordHash(byte[] password, PasswordHash.Strength strength)
+        public static byte[] DeriveKey(byte[] password, byte[] salt, PasswordHash.Strength strength = Sodium.PasswordHash.Strength.Interactive)
         {
-            var salt = Sodium.PasswordHash.GenerateSalt();
             return Sodium.PasswordHash.ScryptHashBinary(password, salt, strength);
         }
 
