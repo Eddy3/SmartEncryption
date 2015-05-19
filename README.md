@@ -4,7 +4,7 @@ This is a library that provides a wrapper to the standard .NET encryption functi
 
 ## Status
 
-The project is still in the design phase; no code will be written until there is a solid design. 
+Experimental. As this library is still in development, it shouldn't be used for production systems.
 
 ## Design
 
