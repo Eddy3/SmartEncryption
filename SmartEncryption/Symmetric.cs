@@ -15,6 +15,7 @@ namespace SmartEncryption
         private const int TAG_SIZE = 128;
         private const int TAG_SIZE_BYTES = 16;
         private const byte VERSION = 0x01;
+        private const int HEADER_LENGTH = 29;
 
         public static byte[] GenerateNonce()
         {
@@ -58,16 +59,17 @@ namespace SmartEncryption
                     cs.FlushFinalBlock();
                     var cipherText = ms.ToArray();
                     var authenticationTag = encryptor.GetTag();
-                    var blob = new byte[29 + cipherText.Length];
+                    var blob = new byte[HEADER_LENGTH + cipherText.Length];
                    
                     var offset = 1;
                     Buffer.BlockCopy(nonce, 0, blob, offset, NONCE_SIZE_BYTES);
+
                     offset += NONCE_SIZE_BYTES;
-                    
                     Buffer.BlockCopy(authenticationTag, 0, blob, offset, TAG_SIZE_BYTES);
+
                     offset += TAG_SIZE_BYTES;
-                    
                     Buffer.BlockCopy(cipherText, 0, blob, offset, cipherText.Length);
+
                     return blob;
                 }
             }
@@ -78,12 +80,14 @@ namespace SmartEncryption
             var offset = 1;
             var nonce = new byte[NONCE_SIZE_BYTES];
             Buffer.BlockCopy(blob, 1, nonce, 0, NONCE_SIZE_BYTES);
+
             offset += NONCE_SIZE_BYTES;
             var tag = new byte[TAG_SIZE_BYTES];
             Buffer.BlockCopy(blob, offset, tag, 0, TAG_SIZE_BYTES);
+
             offset += TAG_SIZE_BYTES;
-            var cipherText = new byte[blob.Length - 29];
-            Buffer.BlockCopy(blob, offset, cipherText, 0, blob.Length - 29);
+            var cipherText = new byte[blob.Length - HEADER_LENGTH];
+            Buffer.BlockCopy(blob, offset, cipherText, 0, blob.Length - HEADER_LENGTH);
 
             using (var aes = new AuthenticatedAesCng())
             {
