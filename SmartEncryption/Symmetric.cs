@@ -17,16 +17,6 @@ namespace SmartEncryption
         private const byte VERSION = 0x01;
         private const int HEADER_LENGTH = 29;
 
-        public static byte[] GenerateNonce()
-        {
-            using (var rngCsp = new RNGCryptoServiceProvider())
-            {
-                var nonce = new byte[NONCE_SIZE_BYTES];
-                rngCsp.GetBytes(nonce);
-                return nonce;
-            }
-        }
-
         public static byte[] GenerateKey()
         {
             using (var rngCsp = new RNGCryptoServiceProvider())
@@ -44,6 +34,11 @@ namespace SmartEncryption
 
         public static byte[] Encrypt(byte[] plaintext, byte[] key)
         {
+            if (key.Length != KEY_SIZE)
+            {
+                throw new ArgumentOutOfRangeException("key", "Invalid key size.");
+            }
+
             var nonce = GenerateNonce();
             using (var aes = new AuthenticatedAesCng())
             {
@@ -59,35 +54,40 @@ namespace SmartEncryption
                     cs.FlushFinalBlock();
                     var cipherText = ms.ToArray();
                     var authenticationTag = encryptor.GetTag();
-                    var blob = new byte[HEADER_LENGTH + cipherText.Length];
+                    var record = new byte[HEADER_LENGTH + cipherText.Length];
                    
                     var offset = 1;
-                    Buffer.BlockCopy(nonce, 0, blob, offset, NONCE_SIZE_BYTES);
+                    Buffer.BlockCopy(nonce, 0, record, offset, NONCE_SIZE_BYTES);
 
                     offset += NONCE_SIZE_BYTES;
-                    Buffer.BlockCopy(authenticationTag, 0, blob, offset, TAG_SIZE_BYTES);
+                    Buffer.BlockCopy(authenticationTag, 0, record, offset, TAG_SIZE_BYTES);
 
                     offset += TAG_SIZE_BYTES;
-                    Buffer.BlockCopy(cipherText, 0, blob, offset, cipherText.Length);
+                    Buffer.BlockCopy(cipherText, 0, record, offset, cipherText.Length);
 
-                    return blob;
+                    return record;
                 }
             }
         }
 
-        public static byte[] Decrypt(byte[] blob, byte[] key)
+        public static byte[] Decrypt(byte[] record, byte[] key)
         {
+            if (key.Length != KEY_SIZE)
+            {
+                throw new ArgumentOutOfRangeException("key", "Invalid key size.");
+            }
+
             var offset = 1;
             var nonce = new byte[NONCE_SIZE_BYTES];
-            Buffer.BlockCopy(blob, 1, nonce, 0, NONCE_SIZE_BYTES);
+            Buffer.BlockCopy(record, 1, nonce, 0, NONCE_SIZE_BYTES);
 
             offset += NONCE_SIZE_BYTES;
             var tag = new byte[TAG_SIZE_BYTES];
-            Buffer.BlockCopy(blob, offset, tag, 0, TAG_SIZE_BYTES);
+            Buffer.BlockCopy(record, offset, tag, 0, TAG_SIZE_BYTES);
 
             offset += TAG_SIZE_BYTES;
-            var cipherText = new byte[blob.Length - HEADER_LENGTH];
-            Buffer.BlockCopy(blob, offset, cipherText, 0, blob.Length - HEADER_LENGTH);
+            var cipherText = new byte[record.Length - HEADER_LENGTH];
+            Buffer.BlockCopy(record, offset, cipherText, 0, record.Length - HEADER_LENGTH);
 
             using (var aes = new AuthenticatedAesCng())
             {
@@ -105,6 +105,16 @@ namespace SmartEncryption
                     cs.FlushFinalBlock();
                     return ms.ToArray();
                 }
+            }
+        }
+
+        private static byte[] GenerateNonce()
+        {
+            using (var rngCsp = new RNGCryptoServiceProvider())
+            {
+                var nonce = new byte[NONCE_SIZE_BYTES];
+                rngCsp.GetBytes(nonce);
+                return nonce;
             }
         }
     }
