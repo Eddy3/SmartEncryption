@@ -25,6 +25,11 @@ namespace SmartEncryption
             }
         }
 
+        public static byte[] DeriveKey(string password, byte[] salt, PasswordHash.Strength strength = PasswordHash.Strength.Interactive)
+        {
+            return DeriveKey(Encoding.UTF8.GetBytes(password), salt, strength);
+        }
+
         public static byte[] DeriveKey(byte[] password, byte[] salt, PasswordHash.Strength strength = PasswordHash.Strength.Interactive)
         {
             return Hashing.DeriveKey(password, salt, strength);
