@@ -59,6 +59,7 @@
   <ItemGroup>
     <Compile Include="HashingTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SymmetricTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SmartEncryption\SmartEncryption.csproj">
