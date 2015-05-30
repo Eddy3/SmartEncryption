@@ -77,34 +77,43 @@ namespace SmartEncryption
                 throw new ArgumentOutOfRangeException("key", "Invalid key size.");
             }
 
-            var offset = 1;
-            var nonce = new byte[NONCE_SIZE_BYTES];
-            Buffer.BlockCopy(record, 1, nonce, 0, NONCE_SIZE_BYTES);
-
-            offset += NONCE_SIZE_BYTES;
-            var tag = new byte[TAG_SIZE_BYTES];
-            Buffer.BlockCopy(record, offset, tag, 0, TAG_SIZE_BYTES);
-
-            offset += TAG_SIZE_BYTES;
-            var cipherText = new byte[record.Length - HEADER_LENGTH];
-            Buffer.BlockCopy(record, offset, cipherText, 0, record.Length - HEADER_LENGTH);
-
-            using (var aes = new AuthenticatedAesCng())
+            //check version
+            if (record[0] != VERSION)
             {
-                aes.CngMode = CngChainingMode.Gcm;
-                aes.KeySize = KEY_SIZE;
-                aes.Key = key;
-                aes.IV = nonce;
-                aes.Tag = tag;
+                var offset = 1;
+                var nonce = new byte[NONCE_SIZE_BYTES];
+                Buffer.BlockCopy(record, 1, nonce, 0, NONCE_SIZE_BYTES);
 
-                using (var ms = new MemoryStream())
-                using (var encryptor = aes.CreateDecryptor())
-                using (var cs = new CryptoStream(ms, encryptor, CryptoStreamMode.Write))
+                offset += NONCE_SIZE_BYTES;
+                var tag = new byte[TAG_SIZE_BYTES];
+                Buffer.BlockCopy(record, offset, tag, 0, TAG_SIZE_BYTES);
+
+                offset += TAG_SIZE_BYTES;
+                var cipherText = new byte[record.Length - HEADER_LENGTH];
+                Buffer.BlockCopy(record, offset, cipherText, 0, record.Length - HEADER_LENGTH);
+
+                using (var aes = new AuthenticatedAesCng())
                 {
-                    cs.Write(cipherText, 0, cipherText.Length);
-                    cs.FlushFinalBlock();
-                    return ms.ToArray();
+                    aes.CngMode = CngChainingMode.Gcm;
+                    aes.KeySize = KEY_SIZE;
+                    aes.Key = key;
+                    aes.IV = nonce;
+                    aes.Tag = tag;
+
+                    using (var ms = new MemoryStream())
+                    using (var encryptor = aes.CreateDecryptor())
+                    using (var cs = new CryptoStream(ms, encryptor, CryptoStreamMode.Write))
+                    {
+                        cs.Write(cipherText, 0, cipherText.Length);
+                        cs.FlushFinalBlock();
+                        return ms.ToArray();
+                    }
                 }
+            }
+            else
+            {
+                //unsupported data versions
+                throw new CryptographicException("Unsupported encrypted format.");
             }
         }
 
