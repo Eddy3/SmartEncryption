@@ -11,7 +11,7 @@
     <AssemblyName>SmartEncryption</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <NuGetPackageImportStamp>a038a4d5</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>c297d581</NuGetPackageImportStamp>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -36,9 +36,8 @@
     <Reference Include="Security.Cryptography">
       <HintPath>Dependencies\Security.Cryptography.dll</HintPath>
     </Reference>
-    <Reference Include="Sodium, Version=0.7.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\libsodium-net.0.7.0\lib\Net40\Sodium.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Sodium">
+      <HintPath>..\packages\libsodium-net.0.8.0\lib\Net40\Sodium.dll</HintPath>
     </Reference>
     <Reference Include="System" />
   </ItemGroup>
