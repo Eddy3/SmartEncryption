@@ -9,11 +9,6 @@ namespace SmartEncryption
         private const int NONCE_SIZE_BYTES = 24;
         private const byte VERSION = 0x01;
 
-        public static byte[] GenerateNonce()
-        {
-            return PublicKeyBox.GenerateNonce();
-        }
-
         public static AsymmetricKeyPair GenerateKeyPair()
         {
             return new AsymmetricKeyPair(PublicKeyBox.GenerateKeyPair());
@@ -56,6 +51,11 @@ namespace SmartEncryption
                 //unsupported data versions
                 throw new CryptographicException("Unsupported encrypted format.");
             }
+        }
+
+        private static byte[] GenerateNonce()
+        {
+            return PublicKeyBox.GenerateNonce();
         }
     }
 }
