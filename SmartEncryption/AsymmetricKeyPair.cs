@@ -10,7 +10,12 @@ namespace SmartEncryption
 
         public byte[] PublicKey => _keyPair.PublicKey;
 
-        public AsymmetricKeyPair(KeyPair keyPair)
+        public AsymmetricKeyPair(byte[] publicKey, byte[] privateKey)
+        {
+            _keyPair = new KeyPair(publicKey, privateKey);
+        }
+
+        internal AsymmetricKeyPair(KeyPair keyPair)
         {
             _keyPair = keyPair;
         }
