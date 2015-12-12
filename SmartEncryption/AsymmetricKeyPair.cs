@@ -6,15 +6,9 @@ namespace SmartEncryption
     {
         private readonly KeyPair _keyPair;
 
-        public byte[] PrivateKey
-        {
-            get { return _keyPair.PrivateKey; }
-        }
+        public byte[] PrivateKey => _keyPair.PrivateKey;
 
-        public byte[] PublicKey
-        {
-            get { return _keyPair.PublicKey; }
-        }
+        public byte[] PublicKey => _keyPair.PublicKey;
 
         public AsymmetricKeyPair(KeyPair keyPair)
         {

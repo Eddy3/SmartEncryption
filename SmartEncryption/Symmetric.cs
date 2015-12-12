@@ -44,7 +44,7 @@ namespace SmartEncryption
         {
             if (key.Length != KEY_SIZE)
             {
-                throw new ArgumentOutOfRangeException("key", "Invalid key size.");
+                throw new ArgumentOutOfRangeException(nameof(key), "Invalid key size.");
             }
 
             var nonce = GenerateNonce();
@@ -82,7 +82,7 @@ namespace SmartEncryption
         {
             if (key.Length != KEY_SIZE)
             {
-                throw new ArgumentOutOfRangeException("key", "Invalid key size.");
+                throw new ArgumentOutOfRangeException(nameof(key), "Invalid key size.");
             }
 
             //check version

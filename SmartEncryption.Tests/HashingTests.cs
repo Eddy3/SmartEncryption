@@ -1,7 +1,5 @@
-﻿using System;
-using System.Text;
+﻿using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SmartEncryption;
 using Sodium;
 
 namespace SmartEncryption.Tests
