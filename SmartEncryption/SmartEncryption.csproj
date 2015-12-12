@@ -48,6 +48,7 @@
     <Compile Include="Asymmetric.cs" />
     <Compile Include="AsymmetricKeyPair.cs" />
     <Compile Include="Hashing.cs" />
+    <Compile Include="KeyDerivation.cs" />
     <Compile Include="Symmetric.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

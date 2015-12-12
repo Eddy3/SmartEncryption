@@ -30,7 +30,7 @@ High-speed hashing via [BLAKE2b](https://blake2.net/).
 
 Safe password hashing using [scrypt](https://en.wikipedia.org/wiki/Scrypt). Hashes are returned as a string that can be safely stored in a database, and can be verified via the `SmartEncryption.Hashing.ValidatePasswordHash()` function.
 
-**Key Derivation** - `SmartEncryption.Hashing.DeriveKey()`
+**Key Derivation** - `SmartEncryption.KeyDerivation.DeriveKey()`
 
 In addition to password hashing, [scrypt](https://en.wikipedia.org/wiki/Scrypt) is exposed for use as a secure key derivation function.
 

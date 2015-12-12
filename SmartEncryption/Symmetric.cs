@@ -31,7 +31,7 @@ namespace SmartEncryption
 
         public static byte[] DeriveKey(byte[] password, byte[] salt)
         {
-            return Hashing.DeriveKey(password, salt);
+            return KeyDerivation.DeriveKey(password, salt);
         }
 
         public static byte[] Encrypt(string plaintext, byte[] key)

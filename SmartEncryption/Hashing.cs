@@ -14,14 +14,6 @@ namespace SmartEncryption
             return Sodium.PasswordHash.ScryptHashStringVerify(hash, password);
         }
 
-        public static byte[] DeriveKey(byte[] password, byte[] salt)
-        {
-            //hash the salt to ensure that it's the expected size of 32 bytes
-            var hashedSalt = FastHash(salt);
-
-            return Sodium.PasswordHash.ScryptHashBinary(password, hashedSalt);
-        }
-
         public static byte[] FastHash(byte[] message)
         {
             return GenericHash.Hash(message, null, 32);
