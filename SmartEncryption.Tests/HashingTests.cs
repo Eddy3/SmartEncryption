@@ -29,16 +29,6 @@ namespace SmartEncryption.Tests
         }
 
         [TestMethod]
-        public void PasswordValidPassSlow()
-        {
-            const string PASSWORD = "ThisIsANot SoRandomPasswordButItIsLongAndHasAspaceWayBackThere";
-            var hash = Hashing.PasswordHash(PASSWORD, PasswordHash.Strength.Moderate);
-            var result = Hashing.ValidatePasswordHash(PASSWORD, hash);
-
-            Assert.IsTrue(result);
-        }
-
-        [TestMethod]
         public void DeriveKeySimpleTest()
         {
             const string PASSWORD = "e125cee61c8cb7778d9e5ad0a6f5d978ce9f84de213a8556d9ffe202020ab4a6ed9074a4eb3416f9b168f137510f3a30b70b96cbfa219ff99f6c6eaffb15c06b60e00cc2890277f0fd3c622115772f7048adaebed86e";
