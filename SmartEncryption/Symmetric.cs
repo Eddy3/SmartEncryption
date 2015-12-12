@@ -3,7 +3,6 @@ using System.Security.Cryptography;
 using Security.Cryptography;
 using System.IO;
 using System.Text;
-using Sodium;
 
 namespace SmartEncryption
 {
