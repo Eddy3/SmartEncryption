@@ -126,12 +126,7 @@ namespace SmartEncryption
 
         private static byte[] GenerateNonce()
         {
-            using (var rngCsp = new RNGCryptoServiceProvider())
-            {
-                var nonce = new byte[NONCE_SIZE];
-                rngCsp.GetBytes(nonce);
-                return nonce;
-            }
+            return Sodium.SodiumCore.GetRandomBytes(NONCE_SIZE);
         }
     }
 }
