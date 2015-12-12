@@ -8,6 +8,8 @@ namespace SmartEncryption
 {
     public static class KeyDerivation
     {
+        private const int SALT_BYTES = 32;
+
         public static byte[] DeriveKey(byte[] password, byte[] salt)
         {
             //hash the salt to ensure that it's the expected size of 32 bytes
@@ -18,7 +20,7 @@ namespace SmartEncryption
 
         public static byte[] GenerateSalt()
         {
-            return Sodium.SodiumCore.GetRandomBytes(32);
+            return Sodium.SodiumCore.GetRandomBytes(SALT_BYTES);
         }
     }
 }
