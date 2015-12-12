@@ -62,5 +62,13 @@ namespace SmartEncryption.Tests
             Assert.AreEqual(OUTPUT_LENGTH, hash2.Length);
             CollectionAssert.AreEqual(hash1, hash2);
         }
+
+        [TestMethod]
+        public void GenerateSaltTest()
+        {
+            var salt = KeyDerivation.GenerateSalt();
+
+            Assert.IsTrue(salt.Length == 32);
+        }
     }
 }

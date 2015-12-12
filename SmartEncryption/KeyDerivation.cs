@@ -15,5 +15,10 @@ namespace SmartEncryption
 
             return Sodium.PasswordHash.ScryptHashBinary(password, hashedSalt);
         }
+
+        public static byte[] GenerateSalt()
+        {
+            return Sodium.SodiumCore.GetRandomBytes(32);
+        }
     }
 }
