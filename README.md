@@ -1,34 +1,48 @@
 # SmartEncryption
 
-This is a library that provides a wrapper to the standard .NET encryption functionality, put together in a way that is designed to make it harder to make mistakes. The library is opinionated, has minimal options, and is designed to do the right thing; this is done at the cost of flexibility. This is the library you want to use if you aren’t sure what the right way to do something is, but want it to be right.
+An opinionated, secure-by-default, does-the-right-thing modern cryptography library.
 
 ## Status
 
-Experimental. As this library is still in development, it shouldn't be used for production systems.
+Experimental. As this library is still in development, it shouldn't be used for production systems. A design and implementation audit is being planned.
 
 ## Design
 
-**Symmetric Encryption** - AES-GCM, 256-bit key, 96-bit nonce, 128-bit tag. Performed via [CLR Security](https://clrsecurity.codeplex.com/), as .NET doesn’t currently have a native wrapper for this functionality. Data will be returned in the following format:
+**Symmetric Encryption** - 
+
+AES-GCM, 256-bit key, 96-bit nonce, 128-bit tag. Performed via [CLR Security](https://clrsecurity.codeplex.com/), as .NET doesn't currently have a native wrapper for this functionality. Data will be returned in the following format:
 
     version[1] || nonce[12] || tag[16] || data[length - 29]
 
-**Symmetric Key & Nonce** - The nonce on all calls will be generated via [RNGCryptoServiceProvider](http://msdn.microsoft.com/en-us/library/system.security.cryptography.rngcryptoserviceprovider%28v=vs.110%29.aspx). A `GenerateKey` method will also be provided that will use [RNGCryptoServiceProvider](http://msdn.microsoft.com/en-us/library/system.security.cryptography.rngcryptoserviceprovider%28v=vs.110%29.aspx) to generate a secure random key.
+**Asymmetric Encryption** - `SmartEncryption.Asymmetric.Encrypt()`
 
-**Symmetric Key Derivation** - To generate an encryption key from a password, a `DeriveKey` method will be provided that uses [scrypt](https://en.wikipedia.org/wiki/Scrypt) via [libsodium](https://github.com/jedisct1/libsodium) (via [libsodium-net](https://github.com/adamcaudill/libsodium-net)). Settings will be determined by the `Sodium.PasswordHash.Strength` value passed in.
-
-**Asymmetric Encryption** - Will be performed via the [libsodium](https://github.com/jedisct1/libsodium) `crypto_box` method (Curve25519/XSalsa20/Poly1305).
+Curve25519/XSalsa20/Poly1305 based public-key encryption. Random keys can be generated via the `SmartEncryption.Asymmetric.GenerateKeyPair()` method.
 
 Output format:
 
     version[1] || nonce[24] || data[length - 25]
 
-**Asymmetric Key & Nonce** - The nonce on all calls will be generated via [libsodium](https://github.com/jedisct1/libsodium)’s `random_bytes` method. A `GenerateKey` method will also be provided that will use the `random_bytes` method to generate a secure random key.
+**Fast Hashing** - `SmartEncryption.Hashing.FastHash()`
 
-**Asymmetric Key Derivation** - To generate an encryption key from a password, a `DeriveKey` method will be provided that uses [scrypt](https://en.wikipedia.org/wiki/Scrypt) via [libsodium](https://github.com/jedisct1/libsodium) (via [libsodium-net](https://github.com/adamcaudill/libsodium-net)). Settings will be determined by the `Sodium.PasswordHash.Strength` value passed in.
+High-speed hashing via [BLAKE2b](https://blake2.net/).
 
-**Password Hashing** - To provide a safe means to hash passwords, [scrypt](https://en.wikipedia.org/wiki/Scrypt) will be used. Settings will be determined by the `Sodium.PasswordHash.Strength` value passed in.
+**Password Hashing** `SmartEncryption.Hashing.PasswordHash()`
 
-**Fast Hashing** - To provide a high speed hashing algorithm, the `crypto_generichash` (BLAKE2b) method from [libsodium](https://github.com/jedisct1/libsodium) will be exposed.
+Safe password hashing using [scrypt](https://en.wikipedia.org/wiki/Scrypt). Hashes are returned as a string that can be safely stored in a database, and can be verified via the `SmartEncryption.Hashing.ValidatePasswordHash()` function.
+
+**Key Derivation** - `SmartEncryption.Hashing.DeriveKey()`
+
+In addition to password hashing, [scrypt](https://en.wikipedia.org/wiki/Scrypt) is exposed for use as a secure key derivation function.
+
+## Libraries
+
+This library depends on:
+
+ * [libsodium](https://github.com/jedisct1/libsodium)
+ * [libsodium-net](https://github.com/adamcaudill/libsodium-net)
+ * [Visual C++ Redistributable for Visual Studio 2015](https://www.microsoft.com/en-us/download/details.aspx?id=48145)
+ * .NET Framework 4.5.2
+
 
 ## License
 
