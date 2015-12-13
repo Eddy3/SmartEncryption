@@ -38,8 +38,8 @@ In addition to password hashing, [scrypt](https://en.wikipedia.org/wiki/Scrypt) 
 
 This library depends on:
 
- * [libsodium](https://github.com/jedisct1/libsodium)
- * [libsodium-net](https://github.com/adamcaudill/libsodium-net)
+ * [libsodium](https://github.com/jedisct1/libsodium) (Frank Denis)
+ * [libsodium-net](https://github.com/adamcaudill/libsodium-net) (Adam Caudill)
  * [Visual C++ Redistributable for Visual Studio 2015](https://www.microsoft.com/en-us/download/details.aspx?id=48145)
  * .NET Framework 4.5.2
 
